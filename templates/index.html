@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Wallpaper Generator</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            padding: 20px;
+        }
+        .container {
+            margin-top: 50px;
+        }
+        input, select, button {
+            margin-top: 10px;
+            padding: 10px;
+            border-radius: 5px;
+            border: 1px solid #ddd;
+            width: 200px;
+        }
+        button {
+            cursor: pointer;
+            background-color: #4CAF50;
+            color: white;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Custom Wallpaper Generator</h1>
+        <form action="/generate" method="POST">
+            <div>
+                <label for="theme">Theme:</label>
+                <select name="theme" id="theme">
+                    <option value="nature">Nature</option>
+                    <option value="abstract">Abstract</option>
+                    <option value="space">Space</option>
+                    <!-- Add more themes as needed -->
+                </select>
+            </div>
+            <div>
+                <label for="color">Color Scheme:</label>
+                <input type="text" id="color" name="color" placeholder="e.g., Blue, Red">
+            </div>
+            <div>
+                <label for="additional">Additional Details:</label>
+                <input type="text" id="additional" name="additional" placeholder="e.g., Mountains, Stars">
+            </div>
+            <button type="submit">Generate Wallpaper</button>
+        </form>
+    </div>
+</body>
+</html>
