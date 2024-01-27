@@ -1,10 +1,20 @@
 from openai import OpenAI
 import os
 from flask import Flask, render_template, request, redirect, url_for
+from PIL import Image 
+import requests 
+from io import BytesIO
 
 app = Flask(__name__)
 
 
+def resize_image(image_url):
+    response = requests.get(image_url)
+    with Image.open(BytesIO(response.content)) as img:
+        new_size = (1080, 2400)
+        image_url = img.resize(new_size)
+        print(image_url)
+        return image_url
 
 
 def create_wallpaper(user_preferences):
@@ -21,7 +31,6 @@ def create_wallpaper(user_preferences):
     n=1,
     )
     image_url = response.data[0].url
-    print(response)
     return image_url
 
 
