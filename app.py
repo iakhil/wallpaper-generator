@@ -23,12 +23,13 @@ def create_wallpaper(user_preferences):
     theme = user_preferences['theme']
     color = user_preferences['color']
     additional = user_preferences['additional']
+    image_count = user_preferences['count']
     response = client.images.generate(
     model="dall-e-2",
     prompt=f"Generate a ultra high-quality wallpaper image of the theme {theme} in the color of {color} with the presence of {additional}. Make the image appear picturesque and alluring.",
     size="1024x1024",
     quality="standard",
-    n=1,
+    n=image_count,
     )
     image_url = response.data[0].url
     return image_url
