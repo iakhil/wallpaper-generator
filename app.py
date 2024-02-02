@@ -34,7 +34,18 @@ def create_wallpaper(user_preferences):
     image_url = response.data[0].url
     return image_url
 
-
+def create_surprise_wallpaper():
+    open_ai_api_key = os.getenv('OPEN_AI_API_KEY')
+    client = OpenAI(api_key=open_ai_api_key)
+    prompt = "Generate a phone wallpaper that is flamboyant, ultra high-definition, abstract, and eye catching."
+    response = client.images.generate(
+    model="dall-e-2",
+    prompt=prompt,    
+    size="1024x1024",
+    quality="standard",
+    n=1git,
+    )
+    return response
 
 @app.route('/')
 def index():
@@ -47,6 +58,10 @@ def generate_wallpaper():
     user_preferences = request.form
     image_url = create_wallpaper(user_preferences)
     return redirect(url_for('index', image_url=image_url))
+
+@app.route('/surpriseme', methods=['GET'])
+def generate_surprise_wallpaper():
+
 
 if __name__ == '__main__':
     app.run(debug=True)
