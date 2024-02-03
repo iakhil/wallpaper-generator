@@ -45,7 +45,7 @@ def create_surprise_wallpaper():
     quality="standard",
     n=1,
     )
-    return response
+    return response.data[0].url
 
 @app.route('/')
 def index():
