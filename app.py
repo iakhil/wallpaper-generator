@@ -29,7 +29,7 @@ def create_wallpaper(user_preferences):
     prompt=f"Generate a ultra high-quality wallpaper image of the theme {theme} in the color of {color} with the presence of {additional}. Make the image appear picturesque and alluring.",
     size="1024x1024",
     quality="standard",
-    n=image_count,
+    n=int(image_count),
     )
     image_url = response.data[0].url
     return image_url
@@ -43,7 +43,7 @@ def create_surprise_wallpaper():
     prompt=prompt,    
     size="1024x1024",
     quality="standard",
-    n=1git,
+    n=1,
     )
     return response
 
@@ -59,10 +59,14 @@ def generate_wallpaper():
     image_url = create_wallpaper(user_preferences)
     return redirect(url_for('index', image_url=image_url))
 
-@app.route('/surpriseme', methods=['GET'])
+@app.route('/surpriseme', methods=['POST'])
 def generate_surprise_wallpaper():
+
+    image_url = create_surprise_wallpaper()
+    return redirect(url_for('index', image_url=image_url))
+
 
 
 if __name__ == '__main__':
-    app.run(debug=True)
+        app.run(debug=True)
 
