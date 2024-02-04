@@ -17,20 +17,30 @@ def resize_image(image_url):
         return image_url
 
 
-def create_wallpaper(user_preferences):
+def create_wallpaper(is_surprise, user_preferences=None):
     open_ai_api_key = os.getenv('OPEN_AI_API_KEY')
     client = OpenAI(api_key=open_ai_api_key)
-    theme = user_preferences['theme']
-    color = user_preferences['color']
-    additional = user_preferences['additional']
-    image_count = user_preferences['count']
-    response = client.images.generate(
-    model="dall-e-2",
-    prompt=f"Generate a ultra high-quality wallpaper image of the theme {theme} in the color of {color} with the presence of {additional}. Make the image appear picturesque and alluring.",
-    size="1024x1024",
-    quality="standard",
-    n=int(image_count),
-    )
+    if user_preferences: 
+        theme = user_preferences['theme']
+        color = user_preferences['color']
+        additional = user_preferences['additional']
+        image_count = user_preferences['count']
+        response = client.images.generate(
+        model="dall-e-2",
+        prompt=f"Generate a ultra high-quality wallpaper image of the theme {theme} in the color of {color} with the presence of {additional}. Make the image appear picturesque and alluring.",
+        size="1024x1024",
+        quality="standard",
+        n=int(image_count),
+        )
+    else:
+        prompt = "Generate a phone wallpaper that is flamboyant, ultra high-definition, abstract, and eye catching."
+        response = client.images.generate(
+        model="dall-e-2",
+        prompt=prompt,    
+        size="1024x1024",
+        quality="standard",
+        n=1,
+        )
     image_url = response.data[0].url
     return image_url
 
@@ -56,13 +66,12 @@ def index():
 def generate_wallpaper():
     # Retrieve user preferences from the form submission
     user_preferences = request.form
-    image_url = create_wallpaper(user_preferences)
+    image_url = create_wallpaper(False, user_preferences)
     return redirect(url_for('index', image_url=image_url))
 
 @app.route('/surpriseme', methods=['POST'])
 def generate_surprise_wallpaper():
-
-    image_url = create_surprise_wallpaper()
+    image_url = create_wallpaper(True)
     return redirect(url_for('index', image_url=image_url))
 
 
